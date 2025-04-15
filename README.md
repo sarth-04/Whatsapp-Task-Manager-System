@@ -1,7 +1,7 @@
 
 # ✅ WhatsApp Task Management System
 
-A simple full-stack system that allows task assignment, tracking, and completion via WhatsApp messages. Users can assign tasks, mark them as done, and view/manage tasks from a clean dashboard UI.
+A WhatsApp Task Management System that allows task assignment, tracking, and completion via WhatsApp messages using a simple UI. Users can assign tasks, mark them as done, and view/manage tasks from a clean dashboard UI.
 
 ---
 
@@ -119,12 +119,15 @@ WHATSAPP_BASE_URL=https://gate.whapi.cloud
 
   
 Directory should be in this form 
+
+
+
 ![Screenshot 2025-04-15 211820](https://github.com/user-attachments/assets/e4d2dbdc-bea0-456b-8979-da552ddc450f)
 
 
 ---
 
-## ✅ Status: Complete
+## ✅ Features
 
 - [x] WhatsApp webhook listener  
 - [x] Task parsing and validation  
