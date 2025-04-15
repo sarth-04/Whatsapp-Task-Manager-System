@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 WhatsApp Task Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .status-pending {
+            color: #ffc107;
+        }
+        .status-done {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-4 text-center">📋 WhatsApp Task Dashboard</h1>
+
+    <form method="GET" action="/" class="mb-4">
+        <div class="input-group">
+            <label class="input-group-text" for="assignee">Filter by Assignee</label>
+            <select class="form-select" id="assignee" name="assignee">
+                <option value="">-- All Assignees --</option>
+                {% for name in assignees %}
+                    <option value="{{ name }}" {% if selected_assignee == name %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-outline-primary" type="submit">Filter</button>
+        </div>
+    </form>
+
+    {% if tasks %}
+        <div class="row">
+            {% for task in tasks %}
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">🆔 Task ID: {{ task[0] }}</h5>
+                        <p><strong>👤 Assignee:</strong> {{ task[2] }}</p>
+                        <p><strong>📝 Task:</strong> {{ task[1] }}</p>
+                        <p><strong>⏰ Time:</strong> {{ task[3] }}</p>
+                        <p><strong>🧾 Notes:</strong> {{ task[4] }}</p>
+                        <p><strong>Status:</strong>
+                            {% if task[5] == 'Pending' %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            {% else %}
+                                <span class="badge bg-success">Done</span>
+                            {% endif %}
+                        </p>
+
+                        {% if task[5] == 'Pending' %}
+                        <form action="/done/{{ task[0] }}" method="POST" class="d-inline">
+                            <button class="btn btn-success btn-sm">✅ Mark as Done</button>
+                        </form>
+                        {% endif %}
+
+                        <form action="/update/{{ task[0] }}" method="POST" class="mt-2">
+                            <div class="input-group">
+                                <input type="text" name="notes" class="form-control form-control-sm" placeholder="Update notes...">
+                                <button class="btn btn-primary btn-sm" type="submit">💬 Update</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted text-center">No tasks found for selected assignee.</p>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
